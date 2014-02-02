@@ -1,0 +1,38 @@
+# -*- makefile -*-
+# Makefile for Microsoft Windows with Microsoft Visual C++ 5.0 compiler
+
+CC=cl
+# Debug version
+#CFLAGS = -c -nologo -YX -Zi -W3
+
+# Optimized veriosion
+CFLAGS = -c -Ox -G6 -nologo -YX -W3
+
+# Optimized veriosion with switched off asserts
+#CFLAGS = -c -Ox -G6 -nologo -YX -Zi -W3 -DNDEBUG
+
+LFLAGS=-Zi -nologo
+
+all: ccalc.exe
+
+ccalc.obj: ccalc.cpp ccalc.h 
+	$(CC) $(CFLAGS) ccalc.cpp
+
+ccalc.res: ccalc.rc
+	rc ccalc.rc
+
+ccalc.exe: ccalc.obj ccalc.res
+	link ccalc.obj ccalc.res
+
+clean: 
+	@del *.his,*.obj,*.*~,*~,*.pch,*.pdb,*.ilk,*.dsp,*.dsw,*.ncb,*.opt,*.plg,*.res
+
+zip: clean
+	cd ..
+	@del ccalc.zip 
+	zip -r ccalc.zip ccalc
+
+copyzip: zip
+	copy ccalc.zip a:
+
+

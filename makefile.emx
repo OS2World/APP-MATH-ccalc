@@ -1,0 +1,26 @@
+# -*- makefile -*-
+# Makefile for OS/2 with g++ compiler
+
+CC=g++
+# if you use egcs-2.90.* version of GCC please add option -fno-exceptions 
+# to reduce code size and increase performance
+
+# Debug version
+#CFLAGS = -c -Wall -O0 -g 
+
+# Optimized version
+CFLAGS = -c -Wall -O6 -g -fno-exceptions 
+
+# Optimized version with switched off asserts
+#CFLAGS = -c -Wall -O6 -g -DNDEBUG
+
+LFLAGS=-g -s
+
+all: ccalc.exe
+
+ccalc.o: ccalc.cpp ccalc.h
+	$(CC) $(CFLAGS) ccalc.cpp
+
+ccalc.exe: ccalc.o
+	$(CC) $(LFLAGS) ccalc.o -lm
+
